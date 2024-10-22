@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Form Mahasiswa</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #454545;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #48cbff;
+            border-radius: 10px;
+            box-shadow: 30px 20px 10px rgba(0, 0, 0, 0.407);
+            padding: 30px;
+            width: 500px;
+            text-align: center;
+        }
+        h1 {
+            color: #000000;
+            margin-bottom: 20px;
+        }
+        #clock {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        #form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #000000;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 25px;
+            background-color: #4ca5af;
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Form Mahasiswa</h1>
+    <div id="clock"></div>
+    <div id="form-container">
+        <input type="text" id="nama" placeholder="Nama">
+        <button id="add-form">Tambah Form</button>
+    </div>
+    <button id="submit">Submit</button> <!-- Only one Submit button now -->
+</div>
+
+<script>
+    const addFormButton = document.getElementById('add-form');
+    const formContainer = document.getElementById('form-container');
+    let formCount = 1;
+
+    addFormButton.addEventListener('click', () => {
+        const newForm = document.createElement('div');
+        newForm.innerHTML = `
+            <input type="text" id="nama${formCount}" placeholder="Nama">`;
+        const namaInput = newForm.querySelector('input');
+        namaInput.addEventListener('keyup', () => {
+            namaInput.value = namaInput.value.toUpperCase();
+        });
+        formContainer.appendChild(newForm);
+        formCount++;
+    });
+
+    const clockElement = document.getElementById('clock');
+    setInterval(() => {
+        const date = new Date();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const seconds = date.getSeconds();
+        clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+    }, 1000);
+
+    const submitButton = document.getElementById('submit');
+    submitButton.addEventListener('click', () => {
+        const namaInputs = document.querySelectorAll('input[type="text"]');
+        const namaValues = Array.prototype.map.call(namaInputs, (input) => input.value);
+        console.log(namaValues);
+        alert("Selamat! Data anda telah berhasil di simpan");
+        location.reload();
+    });
+</script>
+</body>
+</html>
